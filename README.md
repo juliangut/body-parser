@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/github/license/juliangut/body-parser.svg?style=flat-square)](https://github.com/juliangut/body-parser/blob/master/LICENSE)
 
 [![Build Status](https://img.shields.io/travis/juliangut/body-parser.svg?style=flat-square)](https://travis-ci.org/juliangut/body-parser)
-[![Style Check](https://styleci.io/repos/XXXXXXXX/shield)](https://styleci.io/repos/XXXXXXXX)
+[![Style Check](https://styleci.io/repos/79265313/shield)](https://styleci.io/repos/79265313)
 [![Code Quality](https://img.shields.io/scrutinizer/g/juliangut/body-parser.svg?style=flat-square)](https://scrutinizer-ci.com/g/juliangut/body-parser)
 [![Code Coverage](https://img.shields.io/coveralls/juliangut/body-parser.svg?style=flat-square)](https://coveralls.io/github/juliangut/body-parser)
 
