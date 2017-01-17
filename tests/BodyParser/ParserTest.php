@@ -124,7 +124,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     public function testNoContentTypeParser()
     {
-        $request = new ServerRequest([], [], null, 'POST', 'php://temp');
+        $request = new ServerRequest([], [], null, 'POST', 'php://memory');
         $request = $request->withHeader('Content-Type', 'application/json');
         $request->getBody()->write('{"id":10,"name":"Julian"}');
 
