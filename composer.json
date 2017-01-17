@@ -1,0 +1,83 @@
+{
+  "name": "juliangut/body-parser",
+  "description": "PSR7 body parser middleware",
+  "keywords": [
+    "PSR7",
+    "body",
+    "parse",
+    "content-type"
+  ],
+  "homepage": "https://github.com/juliangut/body-parser",
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Julián Gutiérrez",
+      "email": "juliangut@gmail.com",
+      "homepage": "http://juliangut.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/juliangut/body-parser",
+    "issues": "https://github.com/juliangut/body-parser/issues"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=5.6",
+    "symfony/polyfill-php70": "^1.0",
+    "psr/http-message": "^1.0",
+    "willdurand/negotiation": "^2.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^1.0",
+    "humbug/humbug": "~1.0@dev",
+    "phpmd/phpmd": "^2.0",
+    "phpunit/phpunit": "^4.5|^5.0",
+    "sebastian/phpcpd": "^2.0",
+    "squizlabs/php_codesniffer": "^2.0",
+    "zendframework/zend-diactoros": "^1.3"
+  },
+  "suggest": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Jgut\\BodyParser\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jgut\\BodyParser\\Tests\\": "tests/BodyParser/"
+    }
+  },
+  "bin": [
+  ],
+  "config": {
+    "preferred-install": "dist"
+  },
+  "scripts": {
+    "php-lint": "php -l src && php -l tests",
+    "phpcs": "phpcs --standard=PSR2 src tests",
+    "phpcs-lint": "php-cs-fixer fix --dry-run --verbose",
+    "phpcpd": "phpcpd src",
+    "phpmd": "phpmd src text unusedcode,naming,design,controversial,codesize",
+    "phpunit": "phpunit",
+    "phpunit-coverage": "phpunit --coverage-html build/coverage",
+    "phpunit-clover": "phpunit --coverage-clover build/logs/clover.xml",
+    "humbug": "humbug",
+    "qa": [
+      "@php-lint",
+      "@phpcs",
+      "@phpcs-lint",
+      "@phpcpd",
+      "@phpmd"
+    ],
+    "fix": "php-cs-fixer fix --verbose",
+    "security": "composer outdated",
+    "test": [
+      "@qa",
+      "@phpunit",
+      "@humbug"
+    ]
+  }
+}
