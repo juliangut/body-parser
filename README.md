@@ -28,7 +28,7 @@ composer require juliangut/body-parser
 
 ## Usage
 
-Add as many content decoders as you want to cover your application needs based on request `Content-Type` header.
+Add as many content decoders as you want to cover your application needs based on request's `Content-Type` header.
 
 Decoders are assign to one or more HTTP methods.
 
@@ -44,7 +44,7 @@ use Negotiator\Negtiator;
 
 $bodyParser = new Parser(new Negotiator());
 $bodyParser->addDecoder(new Urlencoded()); // Assigned to all requests
-$bodyParser->addDecoder(new Json(), ['POST', 'PUT']); // Assigned only to some requests
+$bodyParser->addDecoder(new Json(), ['POST', 'PUT']); // Assigned only to POST and PUT requests
 
 $app = new \YourMiddlewareAwareApplication();
 $app->addMiddleware($bodyParser);
@@ -61,7 +61,7 @@ $app->run();
 $decoder = new \Jgut\BodyParser\Decoder\UrlEncoded();
 ```
 
-Supported MIME Types:
+Supported MIME types:
 
 * application/x-www-form-urlencoded
 
@@ -71,7 +71,7 @@ Supported MIME Types:
 $decoder = new \Jgut\BodyParser\Decoder\Json();
 ```
 
-Supported MIME Types:
+Supported MIME types:
 
 * application/json
 * text/json
@@ -83,7 +83,7 @@ Supported MIME Types:
 $decoder = new \Jgut\BodyParser\Decoder\Xml();
 ```
 
-Supported MIME Types:
+Supported MIME types:
 
 * application/xml
 * text/xml
@@ -95,7 +95,7 @@ Supported MIME Types:
 $decoder = new \Jgut\BodyParser\Decoder\Csv($delimiter = ',', $enclosure = '"', $escape = '\\');
 ```
 
-Supported MIME Types:
+Supported MIME types:
 
 * text/csv
 
@@ -103,7 +103,7 @@ Supported MIME Types:
 
 You can create your own decoder implementing `Jgut\BodyParser\Decoder\Decoder` interface.
 
-*For example you can implement a YAML decoder for `application/x-yaml` and `text/yaml` content types.*
+For example you could implement a YAML decoder for `application/x-yaml` and `text/yaml` MIME types.
 
 ## Contributing
 
