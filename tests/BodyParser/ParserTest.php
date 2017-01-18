@@ -20,6 +20,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
+use Zend\Diactoros\Stream;
 
 /**
  * Body content parser tests.
@@ -109,7 +110,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     public function testNotParseMethod()
     {
-        $request = new ServerRequest([], [], null, 'GET', 'php://temp');
+        $request = new ServerRequest([], [], null, 'GET');
 
         $decoder = new Parser($this->negotiator);
 
@@ -124,9 +125,8 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     public function testNoContentTypeParser()
     {
-        $request = new ServerRequest([], [], null, 'POST', 'php://memory');
+        $request = new ServerRequest([], [], null, 'POST');
         $request = $request->withHeader('Content-Type', 'application/json');
-        $request->getBody()->write('{"id":10,"name":"Julian"}');
 
         $decoder = new Parser($this->negotiator);
 
@@ -143,9 +143,11 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     public function testBodyDecode()
     {
-        $request = new ServerRequest([], [], null, 'POST', 'php://temp');
+        $body = new Stream('php://temp', 'wb+');
+        $body->write('{"id":10,"name":"Julian"}');
+
+        $request = new ServerRequest([], [], null, 'POST', $body);
         $request = $request->withHeader('Content-Type', 'application/json');
-        $request->getBody()->write('{"id":10,"name":"Julian"}');
 
         $decoder = new Parser($this->negotiator);
 
