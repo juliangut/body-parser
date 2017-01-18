@@ -129,7 +129,7 @@ class Parser
 
         if (array_key_exists(static::METHOD_ALL, $this->decoders)) {
             if ($method === static::METHOD_ALL) {
-                return $this->flatten($this->decoders);
+                return $this->flattenArray($this->decoders);
             }
 
             $decoders = $this->decoders[static::METHOD_ALL];
@@ -149,12 +149,12 @@ class Parser
      *
      * @return array
      */
-    private function flatten(array $array)
+    private function flattenArray(array $array)
     {
         return array_reduce(
             $array,
             function ($carry, $item) {
-                return is_array($item) ? array_merge($carry, $this->flatten($item)) : array_merge($carry, [$item]);
+                return is_array($item) ? array_merge($carry, $this->flattenArray($item)) : array_merge($carry, [$item]);
             },
             []
         );

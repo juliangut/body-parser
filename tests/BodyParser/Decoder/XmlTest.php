@@ -52,6 +52,7 @@ class XmlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \RuntimeException
+     * @expectedExceptionMessageRegExp /^XML request body parsing error/
      */
     public function testInvalidFormat()
     {

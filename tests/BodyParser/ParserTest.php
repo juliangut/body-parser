@@ -42,6 +42,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Methods must be a string or an array
      */
     public function testInvalidMethod()
     {
@@ -57,6 +58,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \RuntimeException
+     * @expectedExceptionMessage GET HTTP requests can not carry body
      */
     public function testNotSupportedMethod()
     {

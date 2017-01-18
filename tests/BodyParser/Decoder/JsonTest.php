@@ -51,6 +51,7 @@ class JsonTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \RuntimeException
+     * @expectedExceptionMessageRegExp /^JSON request body parsing error/
      */
     public function testInvalidFormat()
     {
