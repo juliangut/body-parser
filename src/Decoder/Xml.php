@@ -35,15 +35,19 @@ class Xml implements Decoder
      */
     public function decode($rawBody)
     {
+        if (trim($rawBody) === '') {
+            return;
+        }
+
         $disableEntityLoader = libxml_disable_entity_loader(true);
         $useInternalErrors = libxml_use_internal_errors(true);
 
-        $parsedBody = simplexml_load_string($rawBody);
+        $parsedBody = simplexml_load_string(trim($rawBody));
 
         libxml_use_internal_errors($useInternalErrors);
         libxml_disable_entity_loader($disableEntityLoader);
 
-        if (!$parsedBody instanceof \SimpleXMLElement) {
+        if ($parsedBody === false) {
             // @codeCoverageIgnoreStart
             $errors = array_map(
                 function (\LibXMLError $error) {
@@ -58,6 +62,6 @@ class Xml implements Decoder
             throw new \RuntimeException(sprintf('XML request body parsing error: "%s"', implode(',', $errors)));
         }
 
-        return (array) $parsedBody;
+        return json_decode(json_encode((array) $parsedBody), true);
     }
 }
