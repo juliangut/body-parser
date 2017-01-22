@@ -11,6 +11,8 @@
 
 namespace Jgut\BodyParser\Decoder;
 
+use League\Csv\Reader;
+
 /**
  * CSV request decoder.
  */
@@ -53,20 +55,31 @@ class Csv implements Decoder
         $this->escape = (string) $escape;
 
         $this->addMimeType('text/csv');
+        $this->addMimeType('application/csv');
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     public function decode($rawBody)
     {
-        $lines = array_map(
-            function ($line) {
-                return str_getcsv($line, $this->delimiter, $this->enclosure, $this->escape);
-            },
-            explode("\n", $rawBody)
-        );
+        if (trim($rawBody) === '') {
+            return;
+        }
 
-        return count($lines) === 1 ? $lines[0] : $lines;
+        $parsedBody = Reader::createFromString($rawBody)
+            ->setDelimiter($this->delimiter)
+            ->setEnclosure($this->enclosure)
+            ->setEscape($this->escape)
+            ->fetchAll();
+
+        if (!$parsedBody) {
+            throw new \RuntimeException('CSV request body parsing error: "verify CSV format"');
+        }
+
+        return $parsedBody;
     }
 }

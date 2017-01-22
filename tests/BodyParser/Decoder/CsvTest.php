@@ -38,10 +38,28 @@ class CsvTest extends \PHPUnit_Framework_TestCase
 
     public function testBodyParse()
     {
-        $parsedBody = $this->decoder->decode('"12","Julian"');
+        $rawBody = <<<BODY
+1,"Luke
+Skywalker",Tatooine
+2,Yoda,Dagobah
+BODY;
+
+        $parsedBody = $this->decoder->decode($rawBody);
 
         self::assertInternalType('array', $parsedBody);
-        self::assertEquals('12', $parsedBody[0]);
-        self::assertEquals('Julian', $parsedBody[1]);
+        self::assertCount(2, $parsedBody);
+        self::assertEquals('1', $parsedBody[0][0]);
+        self::assertEquals('2', $parsedBody[1][0]);
+        self::assertEquals("Luke\nSkywalker", $parsedBody[0][1]);
+        self::assertEquals('Yoda', $parsedBody[1][1]);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessageRegExp /^CSV request body parsing error/
+     */
+    public function testInvalidFormat()
+    {
+        $this->decoder->decode('1,"Luke Skywalker,Tattoine');
     }
 }
