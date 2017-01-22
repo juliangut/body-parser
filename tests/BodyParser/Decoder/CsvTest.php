@@ -34,24 +34,21 @@ class CsvTest extends \PHPUnit_Framework_TestCase
     public function testMimeTypes()
     {
         self::assertContains('text/csv', $this->decoder->getMimeTypes());
+        self::assertContains('application/csv', $this->decoder->getMimeTypes());
     }
 
     public function testBodyParse()
     {
-        $rawBody = <<<BODY
+        $rawBody = <<<CSV
 1,"Luke
 Skywalker",Tatooine
-2,Yoda,Dagobah
-BODY;
-
+CSV;
         $parsedBody = $this->decoder->decode($rawBody);
 
         self::assertInternalType('array', $parsedBody);
-        self::assertCount(2, $parsedBody);
         self::assertEquals('1', $parsedBody[0][0]);
-        self::assertEquals('2', $parsedBody[1][0]);
         self::assertEquals("Luke\nSkywalker", $parsedBody[0][1]);
-        self::assertEquals('Yoda', $parsedBody[1][1]);
+        self::assertEquals('Tatooine', $parsedBody[0][2]);
     }
 
     /**
@@ -60,6 +57,6 @@ BODY;
      */
     public function testInvalidFormat()
     {
-        $this->decoder->decode('1,"Luke Skywalker,Tattoine');
+        $this->decoder->decode('1,"Luke Skywalker,Tatooine');
     }
 }

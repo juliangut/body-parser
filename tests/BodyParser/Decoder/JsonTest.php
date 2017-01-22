@@ -40,13 +40,22 @@ class JsonTest extends \PHPUnit_Framework_TestCase
 
     public function testBodyParse()
     {
-        $parsedBody = $this->decoder->decode('{"id":12,"name":"Julian"}');
+        $rawBody = <<<JSON
+{
+    "id": 1,
+    "name": "Luke Skywalker",
+    "planet": "Tatooine"
+}
+JSON;
+        $parsedBody = $this->decoder->decode($rawBody);
 
         self::assertInternalType('array', $parsedBody);
         self::assertArrayHasKey('id', $parsedBody);
-        self::assertEquals(12, $parsedBody['id']);
+        self::assertEquals(1, $parsedBody['id']);
         self::assertArrayHasKey('name', $parsedBody);
-        self::assertEquals('Julian', $parsedBody['name']);
+        self::assertEquals('Luke Skywalker', $parsedBody['name']);
+        self::assertArrayHasKey('planet', $parsedBody);
+        self::assertEquals('Tatooine', $parsedBody['planet']);
     }
 
     /**
@@ -55,6 +64,6 @@ class JsonTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidFormat()
     {
-        $this->decoder->decode('{"id":12,"name":Julian}');
+        $this->decoder->decode('{"id":12,"name":Luke Skywalker}');
     }
 }

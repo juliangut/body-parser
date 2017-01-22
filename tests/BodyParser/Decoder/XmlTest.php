@@ -40,14 +40,23 @@ class XmlTest extends \PHPUnit_Framework_TestCase
 
     public function testBodyParse()
     {
-        $rawBody = '<?xml version="1.0" encoding="utf-8"?><root><id>12</id><name>Julian</name></root>';
+        $rawBody = <<<XML
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <id>1</id>
+  <name>Luke Skywalker</name>
+  <planet>Tatooine</planet>
+</root>
+XML;
         $parsedBody = $this->decoder->decode($rawBody);
 
         self::assertInternalType('array', $parsedBody);
         self::assertArrayHasKey('id', $parsedBody);
-        self::assertEquals(12, $parsedBody['id']);
+        self::assertEquals(1, $parsedBody['id']);
         self::assertArrayHasKey('name', $parsedBody);
-        self::assertEquals('Julian', $parsedBody['name']);
+        self::assertEquals('Luke Skywalker', $parsedBody['name']);
+        self::assertArrayHasKey('planet', $parsedBody);
+        self::assertEquals('Tatooine', $parsedBody['planet']);
     }
 
     /**
@@ -56,6 +65,6 @@ class XmlTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidFormat()
     {
-        $this->decoder->decode('<?xml version="1.0" encoding="utf-8"?><root><id>12</id><name>Julian</surname></root>');
+        $this->decoder->decode('<?xml version="1.0" encoding="utf-8"?><root><id>1</id><name>Luke</planet></root>');
     }
 }
