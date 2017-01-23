@@ -76,7 +76,7 @@ class Csv implements Decoder
             ->setEscape($this->escape)
             ->fetchAll();
 
-        if (!$parsedBody) {
+        if (empty($parsedBody)) {
             throw new \RuntimeException('CSV request body parsing error: "verify CSV format"');
         }
 
