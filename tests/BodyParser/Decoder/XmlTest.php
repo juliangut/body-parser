@@ -38,6 +38,11 @@ class XmlTest extends \PHPUnit_Framework_TestCase
         self::assertContains('application/x-xml', $this->decoder->getMimeTypes());
     }
 
+    public function testEmptyBody()
+    {
+        self::assertNull($this->decoder->decode(''));
+    }
+
     public function testBodyParse()
     {
         $rawBody = <<<XML

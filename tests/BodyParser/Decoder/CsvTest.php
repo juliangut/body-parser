@@ -37,6 +37,11 @@ class CsvTest extends \PHPUnit_Framework_TestCase
         self::assertContains('application/csv', $this->decoder->getMimeTypes());
     }
 
+    public function testEmptyBody()
+    {
+        self::assertNull($this->decoder->decode(''));
+    }
+
     public function testBodyParse()
     {
         $rawBody = <<<CSV
