@@ -38,7 +38,7 @@ class JsonTest extends \PHPUnit_Framework_TestCase
         self::assertContains('application/x-json', $this->decoder->getMimeTypes());
     }
 
-    public function testBodyParse()
+    public function testBodyParseToArray()
     {
         $rawBody = <<<JSON
 {
@@ -56,6 +56,26 @@ JSON;
         self::assertEquals('Luke Skywalker', $parsedBody['name']);
         self::assertArrayHasKey('planet', $parsedBody);
         self::assertEquals('Tatooine', $parsedBody['planet']);
+    }
+
+    public function testBodyParseToObject()
+    {
+        $rawBody = <<<JSON
+{
+    "id": 1,
+    "name": "Luke Skywalker",
+    "planet": "Tatooine"
+}
+JSON;
+        $parsedBody = (new Json(false))->decode($rawBody);
+
+        self::assertInternalType('object', $parsedBody);
+        self::assertObjectHasAttribute('id', $parsedBody);
+        self::assertEquals(1, $parsedBody->id);
+        self::assertObjectHasAttribute('name', $parsedBody);
+        self::assertEquals('Luke Skywalker', $parsedBody->name);
+        self::assertObjectHasAttribute('planet', $parsedBody);
+        self::assertEquals('Tatooine', $parsedBody->planet);
     }
 
     /**
