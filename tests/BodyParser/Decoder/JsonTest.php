@@ -44,7 +44,10 @@ class JsonTest extends \PHPUnit_Framework_TestCase
 {
     "id": 1,
     "name": "Luke Skywalker",
-    "planet": "Tatooine"
+    "planet": {
+        "name": "Tatooine",
+        "location": "Outer Rim"
+    }
 }
 JSON;
         $parsedBody = $this->decoder->decode($rawBody);
@@ -55,7 +58,7 @@ JSON;
         self::assertArrayHasKey('name', $parsedBody);
         self::assertEquals('Luke Skywalker', $parsedBody['name']);
         self::assertArrayHasKey('planet', $parsedBody);
-        self::assertEquals('Tatooine', $parsedBody['planet']);
+        self::assertEquals(['name' => 'Tatooine', 'location' => 'Outer Rim'], $parsedBody['planet']);
     }
 
     public function testBodyParseToObject()
@@ -64,7 +67,10 @@ JSON;
 {
     "id": 1,
     "name": "Luke Skywalker",
-    "planet": "Tatooine"
+    "planet": {
+        "name": "Tatooine",
+        "location": "Outer Rim"
+    }
 }
 JSON;
         $parsedBody = (new Json(false))->decode($rawBody);
@@ -75,7 +81,8 @@ JSON;
         self::assertObjectHasAttribute('name', $parsedBody);
         self::assertEquals('Luke Skywalker', $parsedBody->name);
         self::assertObjectHasAttribute('planet', $parsedBody);
-        self::assertEquals('Tatooine', $parsedBody->planet);
+        self::assertEquals('Tatooine', $parsedBody->planet->name);
+        self::assertEquals('Outer Rim', $parsedBody->planet->location);
     }
 
     /**

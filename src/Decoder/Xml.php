@@ -62,6 +62,34 @@ class Xml implements Decoder
             throw new \RuntimeException(sprintf('XML request body parsing error: "%s"', implode(',', $errors)));
         }
 
-        return json_decode(json_encode((array) $parsedBody), true);
+        return $this->simpleXML2Array($parsedBody);
+    }
+
+    /**
+     * Get array from SimpleXMLElement.
+     *
+     * @param \SimpleXMLElement $xml
+     *
+     * @return array
+     */
+    protected function simpleXML2Array(\SimpleXMLElement $xml)
+    {
+        $array = [];
+
+        foreach ($xml as $element) {
+            /* @var \SimpleXMLElement $element */
+            $elementName = $element->getName();
+            $elementVars = get_object_vars($element);
+
+            if (!empty($elementVars)) {
+                $array[$elementName] = $element instanceof \SimpleXMLElement
+                    ? $this->simpleXML2Array($element)
+                    : $elementVars;
+            } else {
+                $array[$elementName] = trim($element);
+            }
+        }
+
+        return $array;
     }
 }

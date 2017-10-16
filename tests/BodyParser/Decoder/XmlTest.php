@@ -50,7 +50,10 @@ class XmlTest extends \PHPUnit_Framework_TestCase
 <root>
   <id>1</id>
   <name>Luke Skywalker</name>
-  <planet>Tatooine</planet>
+  <planet>
+    <name>Tatooine</name>
+    <location>Outer Rim</location>
+  </planet>
 </root>
 XML;
         $parsedBody = $this->decoder->decode($rawBody);
@@ -61,7 +64,7 @@ XML;
         self::assertArrayHasKey('name', $parsedBody);
         self::assertEquals('Luke Skywalker', $parsedBody['name']);
         self::assertArrayHasKey('planet', $parsedBody);
-        self::assertEquals('Tatooine', $parsedBody['planet']);
+        self::assertEquals(['name' => 'Tatooine', 'location' => 'Outer Rim'], $parsedBody['planet']);
     }
 
     /**

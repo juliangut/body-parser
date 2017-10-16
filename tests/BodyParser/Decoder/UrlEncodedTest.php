@@ -38,14 +38,16 @@ class UrlEncodedTest extends \PHPUnit_Framework_TestCase
 
     public function testBodyParse()
     {
-        $parsedBody = $this->decoder->decode('id=12&name=Julian&role=dev');
+        $parsedBody = $this->decoder
+            ->decode('id=1&name=Luke%20Skywalker&planet[name]=Tatooine&planet[location]=Outer%20Rim');
 
         self::assertInternalType('array', $parsedBody);
         self::assertArrayHasKey('id', $parsedBody);
-        self::assertEquals(12, $parsedBody['id']);
+        self::assertEquals(1, $parsedBody['id']);
         self::assertArrayHasKey('name', $parsedBody);
-        self::assertEquals('Julian', $parsedBody['name']);
-        self::assertArrayHasKey('role', $parsedBody);
-        self::assertEquals('dev', $parsedBody['role']);
+        self::assertEquals('Luke Skywalker', $parsedBody['name']);
+        self::assertArrayHasKey('planet', $parsedBody);
+        self::assertEquals('Tatooine', $parsedBody['planet']['name']);
+        self::assertEquals('Outer Rim', $parsedBody['planet']['location']);
     }
 }
